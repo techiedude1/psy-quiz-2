@@ -1,192 +1,1085 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Psychiatry Quiz Set D - Full Version</title>
-<style>
-body {
-  font-family: 'Poppins', sans-serif;
-  background: linear-gradient(to bottom right, #e6f0ff, #f9f9f9);
-  color: #2c3e50;
-  margin: 0;
-  padding: 0 1rem;
-}
-.quiz-container {
-  max-width: 900px;
-  margin: 3rem auto;
-  background: #ffffff;
-  border-radius: 12px;
-  padding: 2rem;
-  box-shadow: 0 8px 16px rgba(0,0,0,0.1);
-}
-h1, h2 {
-  text-align: center;
-  color: #1a5276;
-}
-.question {
-  margin-bottom: 1.8rem;
-}
-.options label {
-  display: block;
-  padding: 0.4rem;
-  border-radius: 6px;
-  transition: background-color 0.3s;
-  cursor: pointer;
-}
-.options label:hover {
-  background-color: #d6eaf8;
-}
-button {
-  background-color: #3498db;
-  color: white;
-  padding: 0.7rem 1.5rem;
-  border: none;
-  border-radius: 10px;
-  font-size: 1rem;
-  cursor: pointer;
-  margin-top: 1rem;
-  transition: background-color 0.3s;
-}
-button:hover {
-  background-color: #2980b9;
-}
-.results {
-  margin-top: 2rem;
-  padding: 1rem;
-  background-color: #ecf5fc;
-  border-radius: 10px;
-  font-size: 1.1rem;
-}
-.correct {
-  color: green;
-  font-weight: bold;
-}
-.incorrect {
-  color: red;
-  font-weight: bold;
-}
-#password-section {
-  text-align: center;
-  margin-top: 5rem;
-}
-#quiz-section {
-  display: none;
-}
-input[type="password"] {
-  padding: 0.5rem;
-  margin-top: 1rem;
-  font-size: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Psychiatry Quiz for NAPLEX</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f4f8; /* Light background */
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        #password-container {
+            background-color: #fff;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+            transition: all 0.3s ease;
+            animation: fadeIn 0.5s ease;
+        }
+        #password-container h2{
+           color: #6a1b9a; /* Deep purple */
+           font-family: 'Press Start 2P', cursive; /* Added font */
+           margin-bottom: 20px;
+           font-size: 1.4em;
+        }
+
+        #password-input {
+            padding: 12px 15px;
+            font-size: 16px;
+            border: 1px solid #d1c4e9; /* Light purple border */
+            border-radius: 6px;
+            margin-bottom: 20px;
+            width: 80%;
+            max-width: 300px;
+            transition: all 0.3s ease;
+        }
+
+        #password-input:focus {
+            outline: none;
+            border-color: #9c27b0; /* Purple border on focus */
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        #password-submit {
+            padding: 12px 25px;
+            font-size: 18px;
+            background-color: #9c27b0; /* Purple */
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Press Start 2P', cursive; /* Added font */
+
+        }
+
+        #password-submit:hover {
+            background-color: #7b1fa2; /* Darker purple on hover */
+            box-shadow: 0 3px 7px rgba(0, 0, 0, 0.15);
+            transform: translateY(-2px);
+        }
+
+        #password-message {
+            color: #e91e63; /* Pink */
+            margin-top: 10px;
+            font-size: 14px;
+            animation: shake 0.5s;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
+
+        #quiz-container {
+            max-width: 800px;
+            width: 95%;
+            background: #fff;
+            border-radius: 12px;
+            padding: 30px;
+            margin-top: 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            display: none; /* Initially hidden */
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        h1 {
+            color: #4a148c; /* A deep purple */
+            text-align: center;
+            margin-bottom: 25px;
+            font-family: 'Press Start 2P', cursive; /* Added font */
+             font-size: 2em;
+        }
+
+        .question {
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #ede7f6; /* Light purple border */
+        }
+
+        .question p {
+            font-size: 18px;
+            color: #212121;
+            margin-bottom: 15px;
+            font-weight: 500;
+        }
+
+        .options label {
+            display: block;
+            margin-bottom: 12px;
+            cursor: pointer;
+            font-size: 16px;
+            color: #555;
+            transition: all 0.3s ease;
+            border-radius: 6px;
+            padding: 10px;
+        }
+
+        .options label:hover {
+            background-color: #f3e5f5; /* Lightest purple hover */
+            transform: translateX(5px); /* Add a slight horizontal shift on hover */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+        }
+
+        .options input[type="radio"] {
+            margin-right: 12px;
+            vertical-align: middle;
+        }
+
+        button[type="submit"] {
+            padding: 12px 30px;
+            font-size: 18px;
+            background-color: #ff4081; /* A vibrant pink */
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            display: block;
+            margin: 0 auto;
+            margin-top: 30px;
+            transition: all 0.3s ease;
+            font-family: 'Press Start 2P', cursive; /* Added font */
+        }
+
+        button[type="submit"]:hover {
+            background-color: #f50057; /* A darker pink on hover */
+            box-shadow: 0 3px 7px rgba(0, 0, 0, 0.15);
+            transform: translateY(-2px);
+        }
+
+        #results-container {
+            margin-top: 30px;
+            text-align: center;
+            font-size: 20px;
+            font-weight: bold;
+            color: #311b92; /* Deep purple */
+            display: none;
+            padding: 20px;
+            background-color: #f8f0fb;  /* Lightest purple background for results */
+            border-radius: 12px;
+            border: 1px solid #e91e63;
+            animation: fadeIn 0.5s ease;
+            margin-bottom: 20px;
+        }
+       #results-container p{
+         font-size: 1.2em;
+         margin-bottom: 10px;
+       }
+
+        #results-container button{
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+            font-family: 'Press Start 2P', cursive;
+        }
+        #results-container button:hover{
+             background-color: #45a049;
+        }
+
+        .explanation {
+            margin-top: 15px;
+            padding: 15px;
+            background-color: #f8f8f8; /* Very light gray */
+            border-radius: 6px;
+            border: 1px solid #eee;
+            font-size: 14px;
+            color: #666;
+            line-height: 1.5;
+        }
+       .correct-answer{
+          color: #4CAF50; /* Green */
+          font-weight: bold;
+        }
+        .incorrect-answer{
+          color: #FF5252; /* Red */
+          font-weight: bold;
+        }
+
+    </style>
 </head>
 <body>
-<div id="password-section">
-<h1>Enter Quiz Password</h1>
-<input type="password" id="quiz-password" placeholder="Enter password">
-<br><br>
-<button onclick="checkPassword()">Enter</button>
-<p id="password-error" style="color: red; display: none;">Incorrect password. Please try again.</p>
-</div>
+    <div id="password-container">
+        <h2>Enter Password to Access Quiz</h2>
+        <input type="password" id="password-input" placeholder="Enter Password">
+        <button id="password-submit" onclick="checkPassword()">Submit</button>
+        <p id="password-message"></p>
+    </div>
 
-<div class="quiz-container" id="quiz-section">
-<h2>Psychiatry NAPLEX Quiz - Version D</h2>
-<form id="quiz-form"></form>
-<button type="button" onclick="submitQuiz()">Submit Quiz</button>
-<div class="results" id="results"></div>
-</div>
+    <div id="quiz-container">
+        <h1>Psychiatry Quiz for NAPLEX</h1>
+        <form id="quiz-form">
+            <div class="question" data-question-number="1">
+                <p>1. A 25-year-old male presents with auditory hallucinations, delusions of persecution, and disorganized speech for the past 7 months. According to DSM-5, the most likely diagnosis is:</p>
+                <div class="options">
+                    <label><input type="radio" name="q1" value="a"> A. Schizophreniform disorder</label>
+                    <label><input type="radio" name="q1" value="b"> B. Schizophrenia</label>
+                    <label><input type="radio" name="q1" value="c"> C. Brief psychotic disorder</label>
+                    <label><input type="radio" name="q1" value="d"> D. Schizoaffective disorder</label>
+                </div>
+            </div>
 
-<script>
-const PASSWORD = "pharm2025";
+            <div class="question" data-question-number="2">
+                <p>2. Which of the following is a first-line treatment for acute mania associated with bipolar I disorder?</p>
+                <div class="options">
+                    <label><input type="radio" name="q2" value="a"> A. Sertraline</label>
+                    <label><input type="radio" name="q2" value="b"> B. Lithium</label>
+                    <label><input type="radio" name="q2" value="c"> C. Lorazepam</label>
+                    <label><input type="radio" name="q2" value="d"> D. Bupropion</label>
+                </div>
+            </div>
 
-function checkPassword() {
-  const input = document.getElementById("quiz-password").value;
-  if (input === PASSWORD) {
-    document.getElementById("password-section").style.display = "none";
-    document.getElementById("quiz-section").style.display = "block";
-    loadQuiz();
-  } else {
-    document.getElementById("password-error").style.display = "block";
-  }
-}
+            <div class="question" data-question-number="3">
+                <p>3. A patient with generalized anxiety disorder reports persistent worry that is difficult to control. According to DSM-5 criteria, this symptom must be present for at least:</p>
+                <div class="options">
+                    <label><input type="radio" name="q3" value="a"> A. 1 week</label>
+                    <label><input type="radio" name="q3" value="b"> B. 1 month</label>
+                    <label><input type="radio" name="q3" value="c"> C. 3 months</label>
+                    <label><input type="radio" name="q3" value="d"> D. 6 months</label>
+                </div>
+            </div>
 
-// Real full 50 questions here (for demonstration, placeholder inserted)
-const quizData = [
-  {
-    "question": "Which antipsychotic has the highest risk for prolactin elevation?",
-    "options": ["Olanzapine", "Aripiprazole", "Risperidone", "Quetiapine"],
-    "answer": 2,
-    "rationale": "Risperidone causes significant prolactin elevation compared to other antipsychotics."
-  },
-  {
-    "question": "Which antidepressant is most associated with dose-dependent hypertension?",
-    "options": ["Paroxetine", "Venlafaxine", "Sertraline", "Fluoxetine"],
-    "answer": 1,
-    "rationale": "Venlafaxine can increase blood pressure, especially at doses >150 mg/day."
-  }
-  // 48 additional questions inserted here properly in real full generation
-];
+            <div class="question" data-question-number="4">
+                <p>4. Which of the following antipsychotics is known for a higher risk of metabolic side effects such as weight gain and dyslipidemia?</p>
+                <div class="options">
+                    <label><input type="radio" name="q4" value="a"> A. Haloperidol</label>
+                    <label><input type="radio" name="q4" value="b"> B. Aripiprazole</label>
+                    <label><input type="radio" name="q4" value="c"> C. Ziprasidone</label>
+                    <label><input type="radio" name="q4" value="d"> D. Olanzapine</label>
+                </div>
+            </div>
 
-function loadQuiz() {
-  const form = document.getElementById("quiz-form");
-  const shuffled = quizData.sort(() => 0.5 - Math.random());
-  shuffled.forEach((q, i) => {
-    const questionDiv = document.createElement("div");
-    questionDiv.className = "question";
-    questionDiv.innerHTML = `<h3>${i + 1}. ${q.question}</h3>`;
-    const options = q.options.map((opt, idx) =>
-      `<label><input type='radio' name='q${i}' value='${idx}'> ${opt}</label>`
-    ).join('');
-    questionDiv.innerHTML += `<div class='options'>${options}</div>`;
-    form.appendChild(questionDiv);
-  });
-}
+            <div class="question" data-question-number="5">
+                <p>5. A patient being treated for depression with fluoxetine reports decreased libido and difficulty achieving orgasm. Which of the following strategies might be considered to manage this side effect?</p>
+                <div class="options">
+                    <label><input type="radio" name="q5" value="a"> A. Increasing the dose of fluoxetine</label>
+                    <label><input type="radio" name="q5" value="b"> B. Adding bupropion</label>
+                    <label><input type="radio" name="q5" value="c"> C. Switching to paroxetine</label>
+                    <label><input type="radio" name="q5" value="d"> D. Discontinuing fluoxetine immediately</label>
+                </div>
+            </div>
 
-function submitQuiz() {
-  const form = document.getElementById("quiz-form");
-  const results = document.getElementById("results");
-  results.innerHTML = "";
-  let score = 0;
-  let incorrectAnswers = [];
+            <div class="question" data-question-number="6">
+                <p>6. Which of the following medications used to treat Alzheimer's disease primarily works by inhibiting acetylcholinesterase?</p>
+                <div class="options">
+                    <label><input type="radio" name="q6" value="a"> A. Memantine</label>
+                    <label><input type="radio" name="q6" value="b"> B. Donepezil</label>
+                    <label><input type="radio" name="q6" value="c"> C. Levetiracetam</label>
+                    <label><input type="radio" name="q6" value="d"> D. Quetiapine</label>
+                </div>
+            </div>
 
-  quizData.forEach((q, i) => {
-    const selected = form[`q${i}`].value;
-    const correct = q.answer.toString();
-    const isCorrect = selected === correct;
-    if (isCorrect) {
-      score++;
-    } else {
-      incorrectAnswers.push({
-        number: i + 1,
-        question: q.question,
-        yourAnswer: q.options[selected] || "No Answer",
-        correctAnswer: q.options[q.answer],
-        rationale: q.rationale
-      });
-    }
-  });
+            <div class="question" data-question-number="7">
+                <p>7. A patient with panic disorder is experiencing frequent panic attacks. Which of the following medications is most appropriate for long-term management?</p>
+                <div class="options">
+                    <label><input type="radio" name="q7" value="a"> A. Alprazolam</label>
+                    <label><input type="radio" name="q7" value="b"> B. Propranolol</label>
+                    <label><input type="radio" name="q7" value="c"> C. Sertraline</label>
+                    <label><input type="radio" name="q7" value="d"> D. Zolpidem</label>
+                </div>
+            </div>
 
-  const percentage = ((score / quizData.length) * 100).toFixed(2);
-  results.innerHTML = `<h3>You scored ${score}/${quizData.length} (${percentage}%)</h3>`;
+            <div class="question" data-question-number="8">
+                <p>8. Which of the following is a potential adverse effect associated with lithium therapy that requires regular monitoring?</p>
+                <div class="options">
+                    <label><input type="radio" name="q8" value="a"> A. Hypertension</label>
+                    <label><input type="radio" name="q8" value="b"> B. Hyperkalemia</label>
+                    <label><input type="radio" name="q8" value="c"> C. Hypothyroidism</label>
+                    <label><input type="radio" name="q8" value="d"> D. Hyperglycemia</label>
+                </div>
+            </div>
 
-  if (incorrectAnswers.length > 0) {
-    results.innerHTML += `<h4>Review of Incorrect Answers:</h4>`;
-    incorrectAnswers.forEach(item => {
-      results.innerHTML += `<p>
-        <strong>Question ${item.number}:</strong> ${item.question}<br>
-        <span class="incorrect">Your answer: ${item.yourAnswer}</span><br>
-        <span class="correct">Correct answer: ${item.correctAnswer}</span><br>
-        <em>${item.rationale}</em>
-      </p>`;
-    });
-  } else {
-    results.innerHTML += `<p><strong>Congratulations!</strong> You answered everything correctly!</p>`;
-  }
-}
-</script>
+            <div class="question" data-question-number="9">
+                <p>9. A patient with attention-deficit/hyperactivity disorder (ADHD) is prescribed methylphenidate. Which of the following should be monitored regularly?</p>
+                <div class="options">
+                    <label><input type="radio" name="q9" value="a"> A. Liver function tests</label>
+                    <label><input type="radio" name="q9" value="b"> B. Complete blood count</label>
+                    <label><input type="radio" name="q9" value="c"> C. Heart rate and blood pressure</label>
+                    <label><input type="radio" name="q9" value="d"> D. Serum creatinine</label>
+                </div>
+            </div>
 
+            <div class="question" data-question-number="10">
+                <p>10. Which of the following is a contraindication for the use of monoamine oxidase inhibitors (MAOIs)?</p>
+                <div class="options">
+                    <label><input type="radio" name="q10" value="a"> A. Concurrent use of selective serotonin reuptake inhibitors (SSRIs)</label>
+                    <label><input type="radio" name="q10" value="b"> B. History of anxiety disorders</label>
+                    <label><input type="radio" name="q10" value="c"> C. Mild hypertension</label>
+                    <label><input type="radio" name="q10" value="d"> D. Obesity</label>
+                </div>
+            </div>
+
+            <div class="question" data-question-number="11">
+                <p>11. Which of the following is a characteristic symptom of obsessive-compulsive disorder (OCD)?</p>
+                <div class="options">
+                    <label><input type="radio" name="q11" value="a"> A. Persistent sadness</label>
+                    <label><input type="radio" name="q11" value="b"> B. Recurrent intrusive thoughts</label>
+                    <label><input type="radio" name="q11" value="c"> C. Social withdrawal</label>
+                    <label><input type="radio" name="q11" value="d"> D. Flight of ideas</label>
+                </div>
+            </div>
+
+            <div class="question" data-question-number="12">
+                <p>12. Which of the following medications is commonly used to treat the negative symptoms of schizophrenia?</p>
+                <div class="options">
+                    <label><input type="radio" name="q12" value="a"> A. Haloperidol</label>
+                    <label><input type="radio" name="q12" value="b"> B. Risperidone</label>
+                    <label><input type="radio" name="q12" value="c"> C. Olanzapine</label>
+                     <label><input type="radio" name="q12" value="d"> D. Aripiprazole</label>
+                </div>
+            </div>
+
+            <div class="question" data-question-number="13">
+                <p>13. Which of the following is a risk factor for suicide?</p>
+                <div class="options">
+                    <label><input type="radio" name="q13" value="a"> A. Strong social support</label>
+                    <label><input type="radio" name="q13" value="b"> B. History of suicide attempt</label>
+                    <label><input type="radio" name="q13" value="c"> C. Religious affiliation</label>
+                    <label><input type="radio" name="q13" value="d"> D. Marriage</label>
+                </div>
+            </div>
+
+            <div class="question" data-question-number="14">
+                <p>14. Which of the following is a common side effect of tricyclic antidepressants (TCAs)?</p>
+                <div class="options">
+                    <label><input type="radio" name="q14" value="a"> A. Diarrhea</label>
+                    <label><input type="radio" name="q14" value="b"> B. Orthostatic hypotension</label>
+                    <label><input type="radio" name="q14" value="c"> C. Weight loss</label>
+                    <label><input type="radio" name="q14" value="d"> D. Insomnia</label>
+                </div>
+            </div>
+
+            <div class="question" data-question-number="15">
+                <p>15. Which of the following is a first-line treatment for alcohol withdrawal?</p>
+                <div class="options">
+                    <label><input type="radio" name="q15" value="a"> A. Naltrexone</label>
+                    <label><input type="radio" name="q15" value="b"> B. Disulfiram</label>
+                    <label><input type="radio" name="q15" value="c"> C. Benzodiazepines</label>
+                    <label><input type="radio" name="q15" value="d"> D. Acamprosate</label>
+                </div>
+            </div>
+
+            <div class="question" data-question-number="16">
+                <p>16. Which of the following is a symptom of serotonin syndrome?</p>
+                <div class="options">
+                    <label><input type="radio" name="q16" value="a"> A. Bradycardia</label>
+                    <label><input type="radio" name="q16" value="b"> B. Hypothermia</label>
+                    <label><input type="radio" name="q16" value="c"> C. Muscle rigidity</label>
+                    <label><input type="radio" name="q16" value="d"> D. Constipation</label>
+                </div>
+            </div>
+
+            <div class="question" data-question-number="17">
+                <p>17. Which of the following is a contraindication for bupropion?</p>
+                <div class="options">
+                    <label><input type="radio" name="q17" value="a"> A. Depression</label>
+                    <label><input type="radio" name="q17" value="b"> B. Anxiety</label>
+                    <label><input type="radio" name="q17" value="c"> C. Seizure disorder</label>
+                    <label><input type="radio" name="q17" value="d"> D. Smoking cessation</label>
+                </div>
+            </div>
+
+            <div class="question" data-question-number="18">
+                <p>18. Which of the following is a potential long-term effect of untreated major depressive disorder?</p>
+                <div class="options">
+                    <label><input type="radio" name="q18" value="a"> A. Increased creativity</label>
+                    <label><input type="radio" name="q18" value="b"> B. Improved social functioning</label>
+                    <label><input type="radio" name="q18" value="c"> C. Increased risk of cardiovascular disease</label>
+                    <label><input type="radio" name="q18" value="d"> D. Enhanced cognitive function</label>
+                </div>
+            </div>
+
+            <div class="question" data-question-number="19">
+                <p>19. Which of the following is a characteristic of borderline personality disorder?</p>
+                <div class="options">
+                    <label><input type="radio" name="q19" value="a"> A. Grandiosity</label>
+                    <label><input type="radio" name="q19" value="b"> B. Social inhibition</label>
+                    <label><input type="radio" name="q19" value="c"> C. Impulsivity</label>
+                    <label><input type="radio" name="q19" value="d"> D. Need for admiration</label>
+                </div>
+            </div>
+
+             <div class="question" data-question-number="20">
+                <p>20. A patient experiences a sudden onset of intense fear, palpitations, sweating, and shortness of breath. This is most characteristic of:</p>
+                <div class="options">
+                    <label><input type="radio" name="q20" value="a"> A. Generalized anxiety disorder</label>
+                    <label><input type="radio" name="q20" value="b"> B. Panic attack</label>
+                    <label><input type="radio" name="q20" value="c"> C. Social anxiety disorder</label>
+                    <label><input type="radio" name="q20" value="d"> D. Post-traumatic stress disorder</label>
+                </div>
+            </div>
+
+            <div class="question" data-question-number="21">
+                <p>21. Which of the following is a first-line treatment for Tourette's disorder?</p>
+                <div class="options">
+                    <label><input type="radio" name="q21" value="a"> A. Stimulants</label>
+                    <label><input type="radio" name="q21" value="b"> B. Antipsychotics</label>
+                    <label><input type="radio" name="q21" value="c"> C. Benzodiazepines</label>
+                    <label><input type="radio" name="q21" value="d"> D. Acetylcholinesterase inhibitors</label>
+                </div>
+            </div>
+
+            <div class="question" data-question-number="22">
+                <p>22. Which of the following is a characteristic of anorexia nervosa?</p>
+                <div class="options">
+                    <label><input type="radio" name="q22" value="a"> A. Binge eating</label>
+                    <label><input type="radio" name="q22" value="b"> B. Body weight significantly below normal</label>
+                    <label><input type="radio" name="q22" value="c"> C. Lack of concern about body shape</label>
+                    <label><input type="radio" name="q22" value="d"> D. Purging behaviors only</label>
+                </div>
+            </div>
+
+            <div class="question" data-question-number="23">
+                <p>23. Which of the following is the primary mechanism of action of lamotrigine?</p>
+                <div class="options">
+                    <label><input type="radio" name="q23" value="a"> A. Enhances GABA activity</label>
+                    <label><input type="radio" name="q23" value="b"> B. Blocks dopamine receptors</label>
+                    <label><input type="radio" name="q23" value="c"> C. Stabilizes neuronal membranes</label>
+                    <label><input type="radio" name="q23" value="d"> D. Inhibits serotonin reuptake</label>
+                </div>
+            </div>
+
+            <div class="question" data-question-number="24">
+                <p>24. Which of the following is a potential side effect of clozapine that requires regular monitoring of white blood cell count?</p>
+                <div class="options">
+                    <label><input type="radio" name="q24" value="a"> A. Tardive dyskinesia</label>
+                    <label><input type="radio" name="q24" value="b"> B. Agranulocytosis</label>
+                    <label><input type="radio" name="q24" value="c"> C. Neuroleptic malignant syndrome</label>
+                    <label><input type="radio" name="q24" value="d"> D. Priapism</label>
+                </div>
+            </div>
+
+            <div class="question" data-question-number="25">
+                <p>25. Which of the following is a symptom of tardive dyskinesia?</p>
+                <div class="options">
+                    <label><input type="radio" name="q25" value="a"> A. Muscle rigidity</label>
+                    <label><input type="radio" name="q25" value="b"> B. Tremor at rest</label>
+                    <label><input type="radio" name="q25" value="c"> C. Involuntary movements of the face and tongue</label>
+                    <label><input type="radio" name="q25" value="d"> D. Slow movement</label>
+                </div>
+            </div>
+
+             <div class="question" data-question-number="26">
+                <p>26. Which of the following is a characteristic of illness anxiety disorder?</p>
+                <div class="options">
+                    <label><input type="radio" name="q26" value="a"> A. Intentional falsification of symptoms</label>
+                    <label><input type="radio" name="q26" value="b"> B. Preoccupation with having or acquiring a serious illness</label>
+                    <label><input type="radio" name="q26" value="c"> C. Presence of clearly identifiable physical symptoms</label>
+                    <label><input type="radio" name="q26" value="d"> D. Seeking treatment for pain</label>
+                </div>
+            </div>
+
+            <div class="question" data-question-number="27">
+                <p>27. Which of the following is a risk factor for post-traumatic stress disorder (PTSD)?</p>
+                <div class="options">
+                    <label><input type="radio" name="q27" value="a"> A. Strong social support</label>
+                    <label><input type="radio" name="q27" value="b"> B. Previous trauma exposure</label>
+                    <label><input type="radio" name="q27" value="c"> C. Older age</label>
+                    <label><input type="radio" name="q27" value="d"> D. Male gender</label>
+                </div>
+            </div>
+
+            <div class="question" data-question-number="28">
+                <p>28. Which of the following medications is used as a mood stabilizer and also for neuropathic pain?</p>
+                <div class="options">
+                    <label><input type="radio" name="q28" value="a"> A. Lithium</label>
+                    <label><input type="radio" name="q28" value="b"> B. Valproate</label>
+                    <label><input type="radio" name="q28" value="c"> C. Carbamazepine</label>
+                    <label><input type="radio" name="q28" value="d"> D. Gabapentin</label>
+                </div>
+            </div>
+
+            <div class="question" data-question-number="29">
+                <p>29. Which of the following is a symptom of neuroleptic malignant syndrome (NMS)?</p>
+                <div class="options">
+                    <label><input type="radio" name="q29" value="a"> A. Bradykinesia</label>
+                    <label><input type="radio" name="q29" value="b"> B. Muscle rigidity</label>
+                    <label><input type="radio" name="q29" value="c"> C. Hypothermia</label>
+                    <label><input type="radio" name="q29" value="d"> D. Diarrhea</label>
+                </div>
+            </div>
+
+            <div class="question" data-question-number="30">
+                <p>30. Which of the following is a characteristic of histrionic personality disorder?</p>
+                <div class="options">
+                    <label><input type="radio" name="q30" value="a"> A. Social detachment</label>
+                    <label><input type="radio" name="q30" value="b"> B. Excessive emotionality</label>
+                    <label><input type="radio" name="q30" value="c"> C. Orderliness</label>
+                    <label><input type="radio" name="q30" value="d"> D. Suspiciousness</label>
+                </div>
+            </div>
+
+            <div class="question" data-question-number="31">
+                <p>31. Which of the following is a first-line treatment for acute dystonia caused by antipsychotic medication?</p>
+                <div class="options">
+                    <label><input type="radio" name="q31" value="a"> A. Propranolol</label>
+                    <label><input type="radio" name="q31" value="b"> B. Benztropine</label>
+                    <label><input type="radio" name="q31" value="c"> C. Lorazepam</label>
+                    <label><input type="radio" name="q31" value="d"> D. Amantadine</label>
+                </div>
+            </div>
+
+            <div class="question" data-question-number="32">
+                <p>32. Which of the following is a characteristic of bulimia nervosa?</p>
+                <div class="options">
+                    <label><input type="radio" name="q32" value="a"> A. Significantly low body weight</label>
+                    <label><input type="radio" name="q32" value="b"> B. Recurrent episodes of binge eating</label>
+                    <label><input type="radio" name="q32" value="c"> C. Lack of compensatory behaviors</label>
+                    <label><input type="radio" name="q32" value="d"> D. Intense fear of gaining weight</label>
+                </div>
+            </div>
+
+            <div class="question" data-question-number="33">
+                <p>33. Which of the following is a potential complication of electroconvulsive therapy (ECT)?</p>
+                <div class="options">
+                    <label><input type="radio" name="q33" value="a"> A. Seizures</label>
+                    <label><input type="radio" name="q33" value="b"> B. Permanent memory loss</label>
+                    <label><input type="radio" name="q33" value="c"> C. Cardiac arrest</label>
+                    <label><input type="radio" name="q33" value="d"> D. Hair loss</label>
+                </div>
+            </div>
+
+            <div class="question" data-question-number="34">
+                <p>34. Which of the following is a symptom of akathisia?</p>
+                <div class="options">
+                    <label><input type="radio" name="q34" value="a"> A. Muscle stiffness</label>
+                    <label><input type="radio" name="q34" value="b"> B. Restlessness</label>
+                    <label><input type="radio" name="q34" value="c"> C. Slow movement</label>
+                    <label><input type="radio" name="q34" value="d"> D. Tremor</label>
+                </div>
+            </div>
+
+            <div class="question" data-question-number="35">
+                <p>35. Which of the following is a characteristic of avoidant personality disorder?</p>
+                <div class="options">
+                    <label><input type="radio" name="q35" value="a"> A. Disregard for the rights of others</label>
+                    <label><input type="radio" name="q35" value="b"> B. Intense discomfort in social situations</label>
+                    <label><input type="radio" name="q35" value="c"> C. Need to be the center of attention</label>
+                    <label><input type="radio" name="q35" value="d"> D. Grandiose sense of self-importance</label>
+                </div>
+            </div>
+
+            <div class="question" data-question-number="36">
+                <p>36. Which of the following is a first-line treatment for enuresis (bedwetting) in children?</p>
+                <div class="options">
+                    <label><input type="radio" name="q36" value="a"> A. Fluoxetine</label>
+                    <label><input type="radio" name="q36" value="b"> B. Desmopressin</label>
+                    <label><input type="radio" name="q36" value="c"> C. Furosemide</label>
+                    <label><input type="radio" name="q36" value="d"> D. Diazepam</label>
+                </div>
+            </div>
+
+            <div class="question" data-question-number="37">
+                <p>37. Which of the following is a characteristic of oppositional defiant disorder (ODD)?</p>
+                <div class="options">
+                    <label><input type="radio" name="q37" value="a"> A. Hallucinations</label>
+                    <label><input type="radio" name="q37" value="b"> B. Pattern of angry/irritable mood</label>
+                    <label><input type="radio" name="q37" value="c"> C. Social withdrawal</label>
+                    <label><input type="radio" name="q37" value="d"> D. Lack of remorse</label>
+                </div>
+            </div>
+
+            <div class="question" data-question-number="38">
+                <p>38. Which of the following is a potential side effect of long-term use of proton pump inhibitors (PPIs) that may be of concern in a psychiatric patient on other medications?</p>
+                <div class="options">
+                    <label><input type="radio" name="q38" value="a"> A. Weight gain</label>
+                    <label><input type="radio" name="q38" value="b"> B. Vitamin B12 deficiency</label>
+                    <label><input type="radio" name="q38" value="c"> C. Increased appetite</label>
+                    <label><input type="radio" name="q38" value="d"> D. Insomnia</label>
+                </div>
+            </div>
+
+            <div class="question" data-question-number="39">
+                <p>39. Which of the following is a characteristic of factitious disorder?</p>
+                <div class="options">
+                    <label><input type="radio" name="q39" value="a"> A. Seeking secondary gain</label>
+                    <label><input type="radio" name="q39" value="b"> B. Intentional falsification of symptoms</label>
+                    <label><input type="radio" name="q39" value="c"> C. Unconscious motivation</label>
+                    <label><input type="radio" name="q39" value="d"> D. Symptoms are better explained by another disorder</label>
+                </div>
+            </div>
+
+            <div class="question" data-question-number="40">
+                <p>40. Which of the following is a medication that may be used to treat tardive dyskinesia?</p>
+                <div class="options">
+                    <label><input type="radio" name="q40" value="a"> A. Haloperidol</label>
+                    <label><input type="radio" name="q40" value="b"> B. Risperidone</label>
+                    <label><input type="radio" name="q40" value="c"> C. Valbenazine</label>
+                    <label><input type="radio" name="q40" value="d"> D. Metoclopramide</label>
+                </div>
+            </div>
+
+            <div class="question" data-question-number="41">
+                <p>41. A patient presents with symptoms of inattention, hyperactivity, and impulsivity that began in childhood. Which of the following is the most likely diagnosis?</p>
+                <div class="options">
+                    <label><input type="radio" name="q41" value="a"> A. Generalized anxiety disorder</label>
+                    <label><input type="radio" name="q41" value="b"> B. Attention-deficit/hyperactivity disorder (ADHD)</label>
+                    <label><input type="radio" name="q41" value="c"> C. Bipolar disorder</label>
+                    <label><input type="radio" name="q41" value="d"> D. Schizophrenia</label>
+                </div>
+            </div>
+
+            <div class="question" data-question-number="42">
+                <p>42. Which of the following is a potential risk factor for developing Alzheimer's disease?</p>
+                <div class="options">
+                    <label><input type="radio" name="q42" value="a"> A. High educational attainment</label>
+                    <label><input type="radio" name="q42" value="b"> B. Regular physical exercise</label>
+                    <label><input type="radio" name="q42" value="c"> C. Family history</label>
+                    <label><input type="radio" name="q42" value="d"> D. Low cholesterol levels</label>
+                </div>
+            </div>
+
+            <div class="question" data-question-number="43">
+                <p>43. Which of the following medications is commonly used to treat obsessive-compulsive disorder (OCD)?</p>
+                <div class="options">
+                    <label><input type="radio" name="q43" value="a"> A. Lithium</label>
+                    <label><input type="radio" name="q43" value="b"> B. Sertraline</label>
+                    <label><input type="radio" name="q43" value="c"> C. Bupropion</label>
+                    <label><input type="radio" name="q43" value="d"> D. Gabapentin</label>
+                </div>
+            </div>
+
+            <div class="question" data-question-number="44">
+                <p>44. Which of the following is a characteristic of conduct disorder?</p>
+                <div class="options">
+                    <label><input type="radio" name="q44" value="a"> A. Social anxiety</label>
+                    <label><input type="radio" name="q44" value="b"> B. Pattern of violating the rights of others</label>
+                    <label><input type="radio" name="q44" value="c"> C. Repetitive behaviors</label>
+                    <label><input type="radio" name="q44" value="d"> D. Depressed mood</label>
+                </div>
+            </div>
+
+            <div class="question" data-question-number="45">
+                <p>45. Which of the following is a potential side effect of long-term lithium therapy?</p>
+                <div class="options">
+                    <label><input type="radio" name="q45" value="a"> A. Hyperthyroidism</label>
+                    <label><input type="radio" name="q45" value="b"> B. Nephrogenic diabetes insipidus</label>
+                    <label><input type="radio" name="q45" value="c"> C. Hypokalemia</label>
+                    <label><input type="radio" name="q45" value="d"> D. Weight loss</label>
+                </div>
+            </div>
+
+            <div class="question" data-question-number="46">
+                <p>46. Which of the following is a characteristic of schizoid personality disorder?</p>
+                <div class="options">
+                    <label><input type="radio" name="q46" value="a"> A. Intense interpersonal relationships</label>
+                    <label><input type="radio" name="q46" value="b"> B. Detachment from social relationships</label>
+                    <label><input type="radio" name="q46" value="c"> C. Excessive need for admiration</label>
+                    <label><input type="radio" name="q46" value="d"> D. Impulsivity and instability</label>
+                </div>
+            </div>
+
+            <div class="question" data-question-number="47">
+                <p>47. Which of the following is a first-line treatment for restless legs syndrome?</p>
+                <div class="options">
+                    <label><input type="radio" name="q47" value="a"> A. Gabapentin</label>
+                    <label><input type="radio" name="q47" value="b"> B. Levodopa</label>
+                    <label><input type="radio" name="q47" value="c"> C. Clonazepam</label>
+                    <label><input type="radio" name="q47" value="d"> D. Propranolol</label>
+                </div>
+            </div>
+
+            <div class="question" data-question-number="48">
+                <p>48. Which of the following is a potential complication of untreated anorexia nervosa?</p>
+                <div class="options">
+                    <label><input type="radio" name="q48" value="a"> A. Obesity</label>
+                    <label><input type="radio" name="q48" value="b"> B. Osteoporosis</label>
+                    <label><input type="radio" name="q48" value="c"> C. Hypertension</label>
+                    <label><input type="radio" name="q48" value="d"> D. Hyperlipidemia</label>
+                </div>
+            </div>
+
+            <div class="question" data-question-number="49">
+                <p>49. Which of the following is a characteristic of depersonalization/derealization disorder?</p>
+                <div class="options">
+                    <label><input type="radio" name="q49" value="a"> A. Loss of memory</label>
+                    <label><input type="radio" name="q49" value="b"> B. Feeling detached from one's body or surroundings</label>
+                    <label><input type="radio" name="q49" value="c"> C. Multiple distinct personalities</label>
+                    <label><input type="radio" name="q49" value="d"> D. Physical symptoms with no medical explanation</label>
+                </div>
+            </div>
+
+            <div class="question" data-question-number="50">
+                <p>50. Which of the following is a medication that can be used to treat alcohol dependence by reducing cravings?</p>
+                <div class="options">
+                    <label><input type="radio" name="q50" value="a"> A. Disulfiram</label>
+                    <label><input type="radio" name="q50" value="b"> B. Naltrexone</label>
+                    <label><input type="radio" name="q50" value="c"> C. Acamprosate</label>
+                    <label><input type="radio" name="q50" value="d"> D. Topiramate</label>
+                </div>
+            </div>
+
+            <button type="submit">Submit Quiz</button>
+        </form>
+        <div id="results-container">
+            <p>Your Score: <span id="final-score"></span></p>
+            <div id="explanations"></div>
+            <button onclick="resetQuiz()">Retake Quiz</button>
+        </div>
+    </div>
+
+    <script>
+        const correctAnswers = {
+            q1: 'b',
+            q2: 'b',
+            q3: 'd',
+            q4: 'd',
+            q5: 'b',
+            q6: 'b',
+            q7: 'c',
+            q8: 'c',
+            q9: 'c',
+            q10: 'a',
+            q11: 'b',
+            q12: 'd',
+            q13: 'b',
+            q14: 'b',
+            q15: 'c',
+            q16: 'c',
+            q17: 'c',
+            q18: 'c',
+            q19: 'c',
+            q20: 'b',
+            q21: 'b',
+            q22: 'b',
+            q23: 'c',
+            q24: 'b',
+            q25: 'c',
+            q26: 'b',
+            q27: 'b',
+            q28: 'd',
+            q29: 'b',
+            q30: 'b',
+            q31: 'b',
+            q32: 'b',
+            q33: 'b',
+            q34: 'b',
+            q35: 'b',
+            q36: 'b',
+            q37: 'b',
+            q38: 'b',
+            q39: 'b',
+            q40: 'c',
+            q41: 'b',
+            q42: 'c',
+            q43: 'b',
+            q44: 'b',
+            q45: 'b',
+            q46: 'b',
+            q47: 'a',
+            q48: 'b',
+            q49: 'b',
+            q50: 'c'
+        };
+
+        const explanations = {
+            q1: {
+                correct: "B. Schizophrenia",
+                explanation: "Schizophrenia is characterized by symptoms persisting for at least 6 months. Schizophreniform disorder is 1-6 months, brief psychotic disorder is less than 1 month."
+            },
+            q2: {
+                correct: "B. Lithium",
+                explanation: "Lithium is a first-line treatment for acute mania. Sertraline and bupropion can exacerbate mania. Lorazepam is used for acute agitation but not as primary treatment."
+            },
+            q3: {
+                correct: "D. 6 months",
+                explanation: "Generalized anxiety disorder requires symptoms to be present for at least 6 months."
+            },
+            q4: {
+                correct: "D. Olanzapine",
+                explanation: "Olanzapine is associated with a higher risk of metabolic side effects compared to haloperidol, aripiprazole, and ziprasidone."
+            },
+            q5: {
+                correct: "B. Adding bupropion",
+                explanation: "Bupropion can be added to counteract sexual side effects of SSRIs like fluoxetine.  Switching to paroxetine, another SSRI, is likely to worsen the side effect.  Discontinuing fluoxetine should only be done under medical supervision."
+            },
+            q6: {
+                correct: "B. Donepezil",
+                explanation: "Donepezil is an acetylcholinesterase inhibitor. Memantine is an NMDA receptor antagonist. Levetiracetam is an anticonvulsant. Quetiapine is an antipsychotic."
+            },
+            q7: {
+                correct: "C. Sertraline",
+                explanation: "Sertraline, an SSRI, is appropriate for long-term management of panic disorder. Alprazolam is a benzodiazepine used for acute attacks, not long-term. Propranolol can help with some physical symptoms but is not a primary treatment. Zolpidem is a hypnotic."
+            },
+            q8: {
+                correct: "C. Hypothyroidism",
+                explanation: "Lithium can cause hypothyroidism, requiring regular monitoring of thyroid function."
+            },
+            q9: {
+                correct: "C. Heart rate and blood pressure",
+                explanation: "Methylphenidate, a stimulant, can increase heart rate and blood pressure, necessitating regular monitoring."
+            },
+            q10: {
+                correct: "A. Concurrent use of selective serotonin reuptake inhibitors (SSRIs)",
+                explanation: "MAOIs and SSRIs together can cause serotonin syndrome, a dangerous interaction."
+            },
+            q11: {
+                correct: "B. Recurrent intrusive thoughts",
+                explanation: "OCD is characterized by recurrent intrusive thoughts (obsessions) and repetitive behaviors (compulsions)."
+            },
+            q12: {
+                correct: "D. Aripiprazole",
+                explanation: "Aripiprazole, a second-generation antipsychotic, is sometimes used to treat negative symptoms of schizophrenia.  Other second-generation antipsychotics may also be used, but the question asks for a common one."
+            },
+            q13: {
+                correct: "B. History of suicide attempt",
+                explanation: "A previous suicide attempt is a significant risk factor for future attempts."
+            },
+            q14: {
+                correct: "B. Orthostatic hypotension",
+                explanation: "Tricyclic antidepressants (TCAs) are known for causing orthostatic hypotension due to their alpha-adrenergic blocking effects."
+            },
+            q15: {
+                correct: "C. Benzodiazepines",
+                explanation: "Benzodiazepines are the first-line treatment for alcohol withdrawal to prevent seizures and delirium tremens."
+            },
+            q16: {
+                correct: "C. Muscle rigidity",
+                explanation: "Serotonin syndrome is characterized by muscle rigidity,hyperthermia, and autonomic instability."
+            },
+            q17: {
+                correct: "C. Seizure disorder",
+                explanation: "Bupropion lowers the seizure threshold and is contraindicated in patients with a seizure disorder."
+            },
+            q18: {
+                correct: "C. Increased risk of cardiovascular disease",
+                explanation: "Untreated major depressive disorder is associated with an increased risk of cardiovascular disease."
+            },
+            q19: {
+                correct: "C. Impulsivity",
+                explanation: "Borderline personality disorder is characterized by impulsivity, unstable relationships, and emotional dysregulation."
+            },
+            q20: {
+                correct: "B. Panic attack",
+                explanation: "The symptoms described are classic signs of a panic attack."
+            },
+            q21: {
+                correct: "B. Antipsychotics",
+                explanation: "Antipsychotics, particularly atypical ones, are used to manage tics in Tourette's disorder."
+            },
+            q22: {
+                correct: "B. Body weight significantly below normal",
+                explanation: "Anorexia nervosa is characterized by significantly low body weight, intense fear of gaining weight, and distorted body image."
+            },
+            q23: {
+                correct: "C. Stabilizes neuronal membranes",
+                explanation: "Lamotrigine's primary mechanism of action involves stabilizing neuronal membranes to prevent excessive neuronal firing."
+            },
+            q24: {
+                correct: "B. Agranulocytosis",
+                explanation: "Clozapine carries a risk of agranulocytosis, a severe decrease in white blood cell count, requiring regular monitoring."
+            },
+            q25: {
+                correct: "C. Involuntary movements of the face and tongue",
+                explanation: "Tardive dyskinesia is characterized by involuntary movements, often of the face and tongue, caused by long-term antipsychotic use."
+            },
+            q26: {
+                correct: "B. Preoccupation with having or acquiring a serious illness",
+                explanation: "Illness anxiety disorder involves a preoccupation with having or developing a serious illness, despite minimal or no symptoms."
+            },
+            q27: {
+                correct: "B. Previous trauma exposure",
+                explanation: "Prior exposure to trauma is a significant risk factor for developing PTSD."
+            },
+            q28: {
+                correct: "D. Gabapentin",
+                explanation: "Gabapentin is used for both neuropathic pain and as a mood stabilizer in some psychiatric conditions."
+            },
+            q29: {
+                correct: "B. Muscle rigidity",
+                explanation: "Neuroleptic malignant syndrome (NMS) is characterized by muscle rigidity, fever, autonomic instability, and altered mental status."
+            },
+            q30: {
+                correct: "B. Excessive emotionality",
+                explanation: "Histrionic personality disorder involves excessive emotionality and attention-seeking behavior."
+            },
+            q31: {
+                correct: "B. Benztropine",
+                explanation: "Benztropine (an anticholinergic) is commonly used to treat acute dystonia caused by antipsychotic medications."
+            },
+            q32: {
+                correct: "B. Recurrent episodes of binge eating",
+                explanation: "Bulimia nervosa is characterized by recurrent binge eating episodes and compensatory behaviors like vomiting."
+            },
+            q33: {
+                correct: "B. Permanent memory loss",
+                explanation: "While generally safe, a potential complication of ECT is permanent memory loss."
+            },
+            q34: {
+                correct: "B. Restlessness",
+                explanation: "Akathisia is a side effect of antipsychotic medications characterized by a feeling of inner restlessness and the need to move."
+            },
+            q35: {
+                correct: "B. Intense discomfort in social situations",
+                explanation: "Avoidant personality disorder involves intense discomfort in social situations and fear of negative evaluation."
+            },
+            q36: {
+                correct: "B. Desmopressin",
+                explanation: "Desmopressin, a synthetic ADH, is a first-line treatment for enuresis in children."
+            },
+            q37: {
+                correct: "B. Pattern of angry/irritable mood",
+                explanation: "Oppositional defiant disorder (ODD) is characterized by a pattern of angry/irritable mood, argumentative/defiant behavior, and vindictiveness."
+            },
+            q38: {
+                correct: "B. Vitamin B12 deficiency",
+                explanation: "Long-term PPI use can lead to Vitamin B12 deficiency, which can have psychiatric manifestations and interact with psychiatric medications."
+            },
+            q39: {
+                correct: "B. Intentional falsification of symptoms",
+                explanation: "Factitious disorder involves the intentional falsification of symptoms without obvious external rewards."
+            },
+            q40: {
+                correct: "C. Valbenazine",
+                explanation: "Valbenazine is a medication specifically approved for the treatment of tardive dyskinesia."
+            },
+            q41: {
+                correct: "B. Attention-deficit/hyperactivity disorder (ADHD)",
+                explanation: "ADHD is characterized by symptoms of inattention, hyperactivity, and impulsivity that begin in childhood."
+            },
+            q42: {
+                correct: "C. Family history",
+                explanation: "A family history of Alzheimer's disease is a significant risk factor."
+            },
+            q43: {
+                correct: "B. Sertraline",
+                explanation: "Sertraline, an SSRI, is commonly used to treat OCD.  Higher doses are often needed compared to depression."
+            },
+            q44: {
+                correct: "B. Pattern of violating the rights of others",
+                explanation: "Conduct disorder involves a repetitive and persistent pattern of behavior in which the basic rights of others or major age-appropriate societal norms or rules are violated."
+            },
+            q45: {
+                correct: "B. Nephrogenic diabetes insipidus",
+                explanation: "Long-term lithium therapy can cause nephrogenic diabetes insipidus, leading to increased thirst and urination."
+            },
+            q46: {
+                correct: "B. Detachment from social relationships",
+                explanation: "Schizoid personality disorder is characterized by a detachment from social relationships and a restricted range of emotional expression."
+            },
+            q47: {
+                correct: "A. Gabapentin",
+                explanation: "Gabapentin is a first-line treatment for restless legs syndrome."
+            },
+            q48: {
+                correct: "B. Osteoporosis",
+                explanation: "Untreated anorexia nervosa can lead to osteoporosis due to malnutrition and hormonal imbalances."
+            },
+            q49: {
+                correct: "B. Feeling detached from one's body or surroundings",
+                explanation: "Depersonalization/derealization disorder involves a feeling of detachment from one's body (depersonalization) or surroundings (derealization)."
+            },
+            q50: {
+                correct: "C. Acamprosate",
+                explanation: "Acamprosate is used to reduce alcohol cravings in alcohol-dependent patients."
+            }
+        };
+
+        const password = "NAPLEXprep2025";
+        const passwordInput = document.getElementById("password-input");
+        const passwordContainer = document.getElementById("password-container");
+        const quizContainer = document.getElementById("quiz-container");
+        const passwordMessage = document.getElementById("password-message");
+        const resultsContainer = document.getElementById("results-container");
+        const quizForm = document.getElementById("quiz-form");
+        const finalScoreDisplay = document.getElementById("final-score");
+        const explanationsDiv = document.getElementById("explanations");
+
+        function checkPassword() {
+            if (passwordInput.value === password) {
+                passwordContainer.style.display = "none";
+                quizContainer.style.display = "block";
+            } else {
+                passwordMessage.textContent = "Incorrect password. Please try again.";
+                passwordInput.value = "";
+            }
+        }
+
+        quizForm.addEventListener('submit', (event) => {
+            event.preventDefault();
+            submitQuiz();
+        });
+
+        function submitQuiz() {
+            let score = 0;
+            const questionElements = document.querySelectorAll('.question');
+            explanationsDiv.innerHTML = '';
+
+            questionElements.forEach(questionElement => {
+                const questionNumber = questionElement.dataset.questionNumber;
+                const selectedAnswer = document.querySelector(`input[name="q${questionNumber}"]:checked`);
+
+                if (selectedAnswer) {
+                    if (selectedAnswer.value === correctAnswers[`q${questionNumber}`]) {
+                        score++;
+                    }
+                }
+            });
+
+            finalScoreDisplay.textContent = `${score} / ${Object.keys(correctAnswers).length}`;
+
+            // Display correct/incorrect answers and explanations
+            questionElements.forEach(questionElement => {
+                const questionNumber = questionElement.dataset.questionNumber;
+                const selectedAnswer = document.querySelector(`input[name="q${questionNumber}"]:checked`);
+                const correctAnswer = correctAnswers[`q${questionNumber}`];
+                const explanation = explanations[`q${questionNumber}`];
+
+                const questionDiv = document.createElement('div');
+                questionDiv.classList.add('question-result');
+                questionDiv.innerHTML = `<p><strong>Question ${questionNumber}:</strong></p>`;
+
+                if (selectedAnswer) {
+                    if (selectedAnswer.value === correctAnswer) {
+                        questionDiv.innerHTML += `<p>Your Answer: <span class="correct-answer">${selectedAnswer.value.toUpperCase()}</span></p>`;
+                    } else {
+                        questionDiv.innerHTML += `<p>Your Answer: <span class="incorrect-answer">${selectedAnswer.value.toUpperCase()}</span></p>`;
+                        questionDiv.innerHTML += `<p>Correct Answer: <span class="correct-answer">${correctAnswer.toUpperCase()}</span></p>`;
+                    }
+                } else {
+                    questionDiv.innerHTML += `<p>You did not answer this question.</p>`;
+                    questionDiv.innerHTML += `<p>Correct Answer: <span class="correct-answer">${correctAnswer.toUpperCase()}</span></p>`;
+                }
+                questionDiv.innerHTML += `<p>Explanation: ${explanation.explanation}</p>`;
+                explanationsDiv.appendChild(questionDiv);
+            });
+            resultsContainer.style.display = 'block';
+            quizContainer.style.display = 'none';
+        }
+
+        function resetQuiz() {
+            resultsContainer.style.display = 'none';
+            quizContainer.style.display = 'block';
+            const form = document.getElementById("quiz-form");
+            form.reset();
+            explanationsDiv.innerHTML = '';
+             window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
 </body>
 </html>
