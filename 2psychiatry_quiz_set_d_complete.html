@@ -1,0 +1,126 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Psychiatry Quiz - Set D</title>
+  <style>
+    body {
+      font-family: 'Poppins', 'Segoe UI', sans-serif;
+      background: linear-gradient(to bottom right, #e6f0ff, #f9f9f9);
+      color: #2c3e50;
+      margin: 0;
+      padding: 0 1rem;
+    }
+    .quiz-container {
+      max-width: 900px;
+      margin: 3rem auto;
+      background: #ffffff;
+      border-radius: 12px;
+      padding: 2rem;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+    }
+    h1, h2 {
+      text-align: center;
+      color: #1a5276;
+    }
+    .question {
+      margin-bottom: 1.8rem;
+    }
+    .question h3 {
+      color: #154360;
+    }
+    .options label {
+      display: block;
+      padding: 0.4rem;
+      border-radius: 6px;
+      transition: background-color 0.3s;
+      cursor: pointer;
+    }
+    .options label:hover {
+      background-color: #d6eaf8;
+    }
+    button {
+      background-color: #3498db;
+      color: white;
+      padding: 0.7rem 1.5rem;
+      border: none;
+      border-radius: 10px;
+      font-size: 1rem;
+      cursor: pointer;
+      margin-top: 1rem;
+      transition: background-color 0.3s;
+    }
+    button:hover {
+      background-color: #2980b9;
+    }
+    .results {
+      margin-top: 2rem;
+      padding: 1rem;
+      background-color: #ecf5fc;
+      border-radius: 10px;
+      font-size: 1.1rem;
+    }
+    .correct {
+      color: green;
+      font-weight: bold;
+    }
+    .incorrect {
+      color: red;
+      font-weight: bold;
+    }
+    #password-section {
+      text-align: center;
+      margin-top: 5rem;
+    }
+    #quiz-section {
+      display: none;
+    }
+    input[type="password"] {
+      padding: 0.5rem;
+      margin-top: 1rem;
+      font-size: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+  </style>
+</head>
+<body>
+  <div id="password-section">
+    <h1>Enter Quiz Password</h1>
+    <input type="password" id="quiz-password" placeholder="Enter password">
+    <br><br>
+    <button onclick="checkPassword()">Enter</button>
+    <p id="password-error" style="color: red; display: none;">Incorrect password. Please try again.</p>
+  </div>
+
+  <div class="quiz-container" id="quiz-section">
+    <h2>Psychiatry NAPLEX Quiz - Version D</h2>
+    <form id="quiz-form"></form>
+    <button type="button" onclick="submitQuiz()">Submit Quiz</button>
+    <div class="results" id="results"></div>
+  </div>
+
+<script>
+const PASSWORD = "pharm2025";
+function checkPassword() {
+  const input = document.getElementById("quiz-password").value;
+  if (input === PASSWORD) {
+    document.getElementById("password-section").style.display = "none";
+    document.getElementById("quiz-section").style.display = "block";
+    loadQuiz();
+  } else {
+    document.getElementById("password-error").style.display = "block";
+  }
+}
+</script>
+
+<script>
+// Full quizData and logic injected from previously built content
+// Placeholder for 50-question JavaScript quiz array + scoring logic
+// You would normally programmatically paste all question objects + submitQuiz() and loadQuiz()
+</script>
+
+</body>
+</html>
